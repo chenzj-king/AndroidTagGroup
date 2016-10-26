@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def bintrayUserVal = properties.getProperty('bintrayUser')
+def bintrayKeyVal = properties.getProperty('bintrayKey')
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion '24.0.3'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    productFlavors {
+    }
+}
+
+dependencies {
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+}
+
+publish {
+    userOrg = 'chenzj-king'
+    groupId = 'com.dreamliner.lib'
+    artifactId = 'AndroidTagGroup'
+    publishVersion = '1.0.0'
+    desc = 'Oh hi, this is a nice description for a project, right?'
+    website = 'https://github.com/chenzj-king/AndroidTagGroup'
+    bintrayUser = bintrayUserVal
+    bintrayKey = bintrayKeyVal
+    dryRun = false
+}
